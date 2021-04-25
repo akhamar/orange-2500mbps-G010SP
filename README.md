@@ -101,9 +101,11 @@ Aller sur l'interface web de celui-ci `http://192.168.1.10`
 
 Lors de votre première connexion, il vous sera demandé d'entrer un compte / password. Ces identifiants seront ceux utilisé en SSH et en HTTP par la suite.
 
+Il est possible que l'utilisateur soit root par defaut en SSH.
+
 SSH sur l'ONU
 
-> ssh ONTUSER@192.168.1.10
+> ssh YOUR_NEW_USER@192.168.1.10
 
 `vi /etc/init.d/sys.sh`
 ```

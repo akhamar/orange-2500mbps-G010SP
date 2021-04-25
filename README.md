@@ -200,7 +200,9 @@ Recupérez le driver : [bxe](if_bxe.ko.zip)
 Transférez le driver sur votre routeur OpnSense, puis remplacer le driver d'origine.
 
 ```
+mv /tmp/if_bxe.ko /tmp/if_bxe.ko.bak
 mv /tmp/if_bxe.ko /boot/kernel/if_bxe.ko
+chmod 555 /boot/kernel/if_bxe.ko
 ```
 
 ### Paramétrage

@@ -281,3 +281,19 @@ Il faut aussi désactivé les différentes accélérations matérielles
 `fw_setenv sgmii_mode 5`
 
 Check link speed `onu lanpsg` or `onu lanpsg 0`
+
+
+## Fan warning on N20KJ [Broadcom 57810 S]
+
+> In the ediag, I turned off the fan warning (83=1) to bypass the fan and now my board/SFP are running cooler.
+
+Pour supprimer le fan fail (dans le cas ou le ventilateur est supprimé => cas ou le boitier est bien ventilé ou autre), il suffit avec ediag de configurer le champs qui active le fan fail/error.
+
+```
+ediag -b10eng
+nvm cfg
+option 4 (board i/o)
+83=1 (disabled)
+save
+exit
+```

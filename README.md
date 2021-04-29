@@ -274,3 +274,8 @@ Il faut aussi désactivé les différentes accélérations matérielles
 
 ## Récupération de la config d'authentification
 ![Alt text](LhkrqUL38M.png?raw=true "Config ONU")
+
+
+## Il est possible qu'il soit nécessaire de set le lien `sgmii_mode` en 2.5Gbps pour que l'ONU fonctionne correctement
+
+`fw_setenv sgmii_mode 5`

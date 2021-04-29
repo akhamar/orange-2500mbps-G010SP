@@ -200,9 +200,25 @@ Recupérez le driver : [bxe](if_bxe.ko.zip)
 Transférez le driver sur votre routeur OpnSense, puis remplacer le driver d'origine.
 
 ```
-mv /tmp/if_bxe.ko /tmp/if_bxe.ko.bak
-mv /tmp/if_bxe.ko /boot/kernel/if_bxe.ko
+mv /boot/kernel/if_bxe.ko /boot/kernel/if_bxe.ko.bak
+mv /SCP_UPLOAD PATH/if_bxe.ko /boot/kernel/if_bxe.ko
 chmod 555 /boot/kernel/if_bxe.ko
+```
+
+### Modification du driver BXE via patch (optionnel)
+
+Recupérez le driver : [patch](bxe_8727_warpcore_2_5g.patch)
+
+Et tentez de l'appliquer ou de le patcher manuellement vous même.
+
+Emplacement pour patcher `/usr/src/sys/dev/bxe`
+
+Emplacement pour compiler et créer le .ko `/usr/src/sys/modules/bxe`
+```
+cd /usr/src/sys/modules/bxe
+make
+mv /boot/kernel/if_bxe.ko /boot/kernel/if_bxe.ko.bak
+cp if_bxe.ko /boot/kernel/if_bxe.ko
 ```
 
 ### Paramétrage

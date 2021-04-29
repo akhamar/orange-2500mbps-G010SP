@@ -279,3 +279,5 @@ Il faut aussi désactivé les différentes accélérations matérielles
 ## Il est possible qu'il soit nécessaire de set le lien `sgmii_mode` en 2.5Gbps pour que l'ONU fonctionne correctement
 
 `fw_setenv sgmii_mode 5`
+
+Check link speed `onu lanpsg` or `onu lanpsg 0`

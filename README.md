@@ -120,6 +120,7 @@ fw_setenv target oem-generic
 fw_setenv ont_serial XXXXXXXXXX
 fw_setenv image0_version XXXXXXXXXX
 fw_setenv image1_version XXXXXXXXXX
+fw_setenv sgmii_mode 5
 ```
 
 ![Alt text](LhkrqUL38M.png?raw=true "Config ONU")

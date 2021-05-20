@@ -227,16 +227,21 @@ cp if_bxe.ko /boot/kernel/if_bxe.ko
 `vi /boot/loader.conf.local`
 
 ```
-autoboot_delay=30
-
+# Load bxe driver
 hw.pci.honor_msi_blacklist="0"
-
-hw.bxe.interrupt_mode="1"
 net.inet.tcp.tso="0"
 if_bxe_load="YES"
+
+# ONU
+net.inet.tcp.tso="0"
+
+# Optimisation
+hw.bxe.interrupt_mode="2"       # 2 = MSI-X
+hw.bxe.autogreeen="2"           # 2 = Force off
 ```
 
 Il est possible que la ligne `autoboot_delay=30` soit nécéssaire. En effet l'ONU étant assez long a boot, un routeur démarrant assez rapidement peut poser problème. On peut donc virtuellement ralentir le boot, pour laisser un peu plus de temps a l'ONU pour boot.
+> Il semblerait qu'après plusieurs semaines de tests, la ligne `autoboot_delay=30`n'est pas nécessaire
 
 Il faut aussi désactivé les différentes accélérations matérielles
 

@@ -195,7 +195,7 @@ exit
 
 ### Driver BXE
 
-Recupérez le driver : [bxe opnsense21.X](opnsense_21.X/if_bxe.ko.zip) [bxe opnsense22.X](opnsense_22.X/if_bxe.ko-freebsd13-patched.zip) 
+Recupérez le driver : [bxe opnsense21.X](opnsense_21.X/if_bxe.ko.zip) / [bxe opnsense22.X](opnsense_22.X/if_bxe.ko-freebsd13-patched.zip) 
 
 Transférez le driver sur votre routeur OpnSense, puis remplacer le driver d'origine.
 
@@ -207,7 +207,7 @@ chmod 555 /boot/kernel/if_bxe.ko
 
 ### Modification du driver BXE via patch (optionnel)
 
-Recupérez le driver : [patch opnsense21.X](opnsense_21.X/bxe_8727_warpcore_2_5g.patch) [patch opnsense22.X](opnsense_22.X/upnatom_bxe_patch.txt) 
+Recupérez le driver : [patch opnsense21.X](opnsense_21.X/bxe_8727_warpcore_2_5g.patch) / [patch opnsense22.X](opnsense_22.X/upnatom_bxe_patch.txt) 
 
 Et tentez de l'appliquer ou de le patcher manuellement vous même.
 

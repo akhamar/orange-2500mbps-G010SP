@@ -120,7 +120,6 @@ fw_setenv target oem-generic
 fw_setenv ont_serial XXXXXXXXXX
 fw_setenv image0_version XXXXXXXXXX
 fw_setenv image1_version XXXXXXXXXX
-fw_setenv sgmii_mode 5
 ```
 
 ![Alt text](LhkrqUL38M.png?raw=true "Config ONU")
@@ -196,7 +195,7 @@ exit
 
 ### Driver BXE
 
-Recupérez le driver : [bxe](if_bxe.ko.zip)
+Recupérez le driver : [bxe opnsense21.X](opnsense_21.X/if_bxe.ko.zip) [bxe opnsense22.X](opnsense_22.X/if_bxe.ko-freebsd13-patched.zip) 
 
 Transférez le driver sur votre routeur OpnSense, puis remplacer le driver d'origine.
 
@@ -208,7 +207,7 @@ chmod 555 /boot/kernel/if_bxe.ko
 
 ### Modification du driver BXE via patch (optionnel)
 
-Recupérez le driver : [patch](bxe_8727_warpcore_2_5g.patch)
+Recupérez le driver : [patch opnsense21.X](opnsense_21.X/bxe_8727_warpcore_2_5g.patch) [patch opnsense22.X](opnsense_22.X/upnatom_bxe_patch.txt) 
 
 Et tentez de l'appliquer ou de le patcher manuellement vous même.
 
@@ -227,6 +226,8 @@ cp if_bxe.ko /boot/kernel/if_bxe.ko
 `vi /boot/loader.conf.local`
 
 ```
+autoboot_delay=30
+
 # Load bxe driver
 hw.pci.honor_msi_blacklist="0"
 net.inet.tcp.tso="0"
@@ -238,10 +239,10 @@ net.inet.tcp.tso="0"
 # Optimisation
 hw.bxe.interrupt_mode="2"       # 2 = MSI-X
 hw.bxe.autogreeen="2"           # 2 = Force off
+
 ```
 
 Il est possible que la ligne `autoboot_delay=30` soit nécéssaire. En effet l'ONU étant assez long a boot, un routeur démarrant assez rapidement peut poser problème. On peut donc virtuellement ralentir le boot, pour laisser un peu plus de temps a l'ONU pour boot.
-> Il semblerait qu'après plusieurs semaines de tests, la ligne `autoboot_delay=30`n'est pas nécessaire
 
 Il faut aussi désactivé les différentes accélérations matérielles
 

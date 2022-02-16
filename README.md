@@ -6,16 +6,16 @@ La cible de cette explication est pour le materiel / software suivant
 
 - Orange en offre `Livebox Up Fibre`
 - Un convertisseur Fibre vers RJ45 `MC220L Tp-Link`
-- Un ONU `G-010S-P`
+- Un ONU `G-010S-P` ou un ONU `GPON-ONU-34-20BI (ID: 133619 - https://www.fs.com/fr/products/133619.html)`
 - Une carte SFP+ `N20KJ [Broadcom 57810 S]`
 - Un routeur sous `OpnSense [21.x]`
 
 
+## G-010S-P
 
+### Passage du G-010S-P en Carlitoxx V1
 
-## Passage du G-010S-P en Carlitoxx V1
-
-### SSH vers G-010S-P
+#### SSH vers G-010S-P
 > IP: 192.168.1.10
 > 
 > login: ONTUSER
@@ -28,7 +28,9 @@ Une fois cette étape faite, il suffit de ping l'ONU via `ping -t -w 30 192.168.
 
 L'ONU devrait répondre au ping (une fois celui-ci démarré).
 
-### Backup l'ONU G-010S-P avant flash
+> ssh -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10
+
+#### Backup l'ONU G-010S-P avant flash
 
 Backup via dd
 
@@ -54,7 +56,7 @@ scp -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10:/tmp/mtd4.b
 scp -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10:/tmp/mtd5.backup mtd5.backup
 ```
 
-### Flash en Carlitoxx V1
+#### Flash en Carlitoxx V1
 
 Transfert des images mtd2.bin et mtd5.bin
 
@@ -91,9 +93,9 @@ reboot
 
 
 
-## Configuration de l'ONU
+### Configuration de l'ONU
 
-### Configuration de Carlitoxx v1
+#### Configuration de Carlitoxx v1
 
 Une fois l'ONU redémarré via un test `ping -t -w 30 192.168.1.10`
 
@@ -126,7 +128,7 @@ fw_setenv image1_version XXXXXXXXXX
 
 > Reboot
 
-### Test de l'ONU dans le MC220L
+#### Test de l'ONU dans le MC220L
 
 Il est maintenant temps de vérifier que la configuration de l'ONU permet de se connecté à l'OLT, d'obtenir les VLAN et de pouvoir obtenir un traffic montant et descendant.
 
@@ -154,7 +156,90 @@ ou
 
 `gtop` puis `c` et `y`
 
-> Vous devriez visualiser les VLAN typique orange (832, ...)
+> Vous devriez visualiser les VLAN typique orange (835, ...)
+
+Si vous êtes arrivé jusqu'ici, normalement votre ONU est correctement configuré.
+
+
+
+## GPON-ONU-34-20BI
+
+### Configuration de l'ONU
+
+#### SSH vers GPON-ONU-34-20BI
+> IP: 192.168.1.10
+>
+> login: ONTUSER
+>
+> password: 7sp!lwUBz1
+
+Dans un premier temps, il faut utiliser l'ONU avec le MC220L, brancher le MC220L directement sur un PC en fixant une ip static de type 192.168.1.X (différente de 192.168.1.10).
+
+Une fois cette étape faite, il suffit de ping l'ONU via `ping -t -w 30 192.168.1.10`.
+
+L'ONU devrait répondre au ping (une fois celui-ci démarré).
+
+`ssh -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10`
+
+
+#### Parametrage de l'ONU
+
+Une fois connecté en SSH
+
+```
+cp /etc/mibs/data_1g_8q.ini /etc/mibs/data_1g_8q.ini.bak
+vi /etc/mibs/data_1g_8q.ini
+```
+remplacer
+>     # ONT-G
+>     256 0 HWTC 0000000000000 00000000 2 0 0 0 0 #0
+par
+>     # ONT-G
+>     256 0 SCOM SMBSSGLBF121\0\0 00000000 2 0 0 0 0 #0
+ou
+`vendor_id` correspond au 4 premières lettre du numéro de série et `ont_version` correspond à la version hardware
+
+Pour une raison que j'ignore, dans mon cas, le version hardware ne fonctionne pas avec la valeur de mon ONT SCOM.
+La valeur utilisé est donc `SMBSSGLBF121\0\0`
+
+
+Il suffit ensuite de renseigner le num de série (n serial) de l'ONT.
+
+```
+set_serial_number XXXXXXX
+reboot
+```
+> ou XXXXXXX correspond au num série de l'ONT
+
+#### Test de l'ONU dans le MC220L
+
+Il est maintenant temps de vérifier que la configuration de l'ONU permet de se connecté à l'OLT, d'obtenir les VLAN et de pouvoir obtenir un traffic montant et descendant.
+
+SSH sur l'ONU
+
+> ssh ONTUSER@192.168.1.10
+
+---
+
+`onu ploamsg`
+
+> curr_state doit être a 5
+
+---
+
+`onu gtcsng`
+
+> Votre ont_serial doit apparaitre ici
+
+---
+
+`gtop` puis `c` et `v`
+
+ou
+
+`gtop` puis `c` et `y`
+
+> Vous devriez visualiser les VLAN typique orange (835, ...)
 
 Si vous êtes arrivé jusqu'ici, normalement votre ONU est correctement configuré.
 

@@ -1,0 +1,21 @@
+sed -i 's/buster main/buster main non-free/g' /etc/apt/sources.list
+
+apt install firmware-bnx2x build-essential libncurses5-dev bison flex bc curl libelf-dev libssl-dev
+
+apt install linux-headers-$(uname -r)
+apt install linux-source
+
+cp /usr/src/linux-source-*.tar.xz .
+tar -xvf linux-source-*.tar.xz
+
+cd linux-source-4.19
+cp /usr/src/linux-headers-$(uname -r)/.config .
+cp /usr/src/linux-headers-$(uname -r)/Module.symvers .
+curl https://raw.githubusercontent.com/JAMESMTL/snippets/master/bnx2x/patches/bnx2x_warpcore+8727_2_5g_sgmii.patch | patch -p0
+make modules_prepare
+make M=drivers/net/ethernet/broadcom/bnx2x
+strip --strip-debug drivers/net/ethernet/broadcom/bnx2x/bnx2x.ko
+
+cp drivers/net/ethernet/broadcom/bnx2x/bnx2x.ko /lib/modules/$(uname -r)/kernel/drivers/net/ethernet/broadcom/bnx2x/
+update-initramfs -u -k all
+reboot

@@ -389,3 +389,18 @@ option 4 (board i/o)
 save
 exit
 ```
+
+
+## Patch BXE on opnsense (not tested)
+
+```
+cd /usr/
+git clone https://github.com/opnsense/tools
+cd tools/
+make update CONFIGFIR=config/24.1
+cd /usr/src/
+fetch https://filedrop.c-maxwell.net/opnsense22_7/upnatom_bxe_patch.txt
+patch -p1 < upnatom_bxe_patch.txt
+cd sys/modules/bxe/
+make -j16
+```

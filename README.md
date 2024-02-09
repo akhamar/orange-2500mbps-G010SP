@@ -403,4 +403,10 @@ fetch https://filedrop.c-maxwell.net/opnsense22_7/upnatom_bxe_patch.txt
 patch -p1 < upnatom_bxe_patch.txt
 cd sys/modules/bxe/
 make -j16
+make install
+```
+```
+mv /boot/kernel/if_bxe.ko /boot/kernel/if_bxe.ko.bak
+mv /boot/modules/if_bxe.ko /boot/kernel/if_bxe.ko
+reboot
 ```

@@ -1,4 +1,4 @@
-# Orange 2500Mbps
+[upnatom_bxe_patch.txt](https://github.com/akhamar/orange-2500mbps-G010SP/files/14379220/upnatom_bxe_patch.txt)# Orange 2500Mbps
 
 ## Préconditions
 
@@ -399,12 +399,17 @@ git clone https://github.com/opnsense/tools
 cd tools/
 make update CONFIGFIR=config/24.1
 cd /usr/src/
-fetch https://filedrop.c-maxwell.net/opnsense22_7/upnatom_bxe_patch.txt
+fetch https://github.com/akhamar/orange-2500mbps-G010SP/files/14379229/upnatom_bxe_patch.txt
 patch -p1 < upnatom_bxe_patch.txt
 cd sys/modules/bxe/
 make -j16
 make install
 ```
+
+> Original file from `https://filedrop.c-maxwell.net/opnsense22_7/upnatom_bxe_patch.txt`
+>
+> [upnatom_bxe_patch.txt](https://github.com/akhamar/orange-2500mbps-G010SP/files/14379229/upnatom_bxe_patch.txt)
+
 ```
 mv /boot/kernel/if_bxe.ko /boot/kernel/if_bxe.ko.bak
 mv /boot/modules/if_bxe.ko /boot/kernel/if_bxe.ko

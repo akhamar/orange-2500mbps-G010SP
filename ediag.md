@@ -16,7 +16,7 @@ exit
 this sets up 2.5g on port 1
 
 
-# Port 1
+# Port 2
 
 ```bash
 ediag.exe -b10eng
@@ -32,3 +32,19 @@ save
 exit
 ```
 this sets up 10g on port 2
+
+# Revert back
+
+```bash
+ediag.exe -b10eng
+
+device 1
+nvm cfg
+7
+35=50
+36=50
+56=7
+59=7
+save
+exit
+```
